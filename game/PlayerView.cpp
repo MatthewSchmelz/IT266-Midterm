@@ -515,7 +515,13 @@ void idPlayerView::SingleView( idUserInterface *hud, const renderView_t *view, i
 	}
 
 	// draw screen blobs
-	if ( !pm_thirdPerson.GetBool() && !g_skipViewEffects.GetBool() ) {
+
+	//QUAKE SOULS EDIT:
+	// Set third person boolean to true(1) in order to force fullscreen
+	// &&
+	// removed the ! operand on the if statement, to have the UI appear while in thrdprsn
+	pm_thirdPerson.SetBool(1);
+	if ( pm_thirdPerson.GetBool() && !g_skipViewEffects.GetBool() ) {
 		for ( int i = 0 ; i < MAX_SCREEN_BLOBS ; i++ ) {
 			screenBlob_t	*blob = &screenBlobs[i];
 			if ( blob->finishTime <= gameLocal.time ) {
