@@ -93,6 +93,8 @@ stateResult_t rvWeaponGrenadeLauncher::State_Idle( const stateParms_t& parms ) {
 	};	
 	switch ( parms.stage ) {
 		case STAGE_INIT:
+			pm_walkspeed.SetInteger(80);
+			pm_speed.SetInteger(80);
 			if ( !AmmoAvailable ( ) ) {
 				SetStatus ( WP_OUTOFAMMO );
 			} else {
@@ -102,7 +104,9 @@ stateResult_t rvWeaponGrenadeLauncher::State_Idle( const stateParms_t& parms ) {
 			PlayCycle( ANIMCHANNEL_ALL, GetIdleAnim(), parms.blendFrames );
 			return SRESULT_STAGE ( STAGE_WAIT );
 		
-		case STAGE_WAIT:			
+		case STAGE_WAIT:
+			pm_walkspeed.SetInteger(80);
+			pm_speed.SetInteger(80);
 			if ( wsfl.lowerWeapon ) {
 				SetState ( "Lower", 4 );
 				return SRESULT_DONE;
@@ -146,6 +150,8 @@ stateResult_t rvWeaponGrenadeLauncher::State_Fire ( const stateParms_t& parms ) 
 		case STAGE_INIT:
 			nextAttackTime = gameLocal.time + (fireRate * owner->PowerUpModifier ( PMOD_FIRERATE ));
 			Attack ( false, 1, spread, 0, 1.0f );
+			pm_walkspeed.SetInteger(0);
+			pm_speed.SetInteger(0);
 			PlayAnim ( ANIMCHANNEL_ALL, GetFireAnim(), 0 );	
 			return SRESULT_STAGE ( STAGE_WAIT );
 	
@@ -175,6 +181,8 @@ stateResult_t rvWeaponGrenadeLauncher::State_Reload ( const stateParms_t& parms 
 	};	
 	switch ( parms.stage ) {
 		case STAGE_INIT:
+			pm_walkspeed.SetInteger(0);
+			pm_speed.SetInteger(0);
 			if ( wsfl.netReload ) {
 				wsfl.netReload = false;
 			} else {
@@ -186,6 +194,8 @@ stateResult_t rvWeaponGrenadeLauncher::State_Reload ( const stateParms_t& parms 
 			return SRESULT_STAGE ( STAGE_WAIT );
 			
 		case STAGE_WAIT:
+			pm_walkspeed.SetInteger(0);
+			pm_speed.SetInteger(0);
 			if ( AnimDone ( ANIMCHANNEL_ALL, 4 ) ) {
 				AddToClip ( ClipSize() );
 				SetState ( "Idle", 4 );

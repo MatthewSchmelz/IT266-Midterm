@@ -2421,7 +2421,7 @@ void idActor::Damage( idEntity *inflictor, idEntity *attacker, const idVec3 &dir
 		}		
 
 		// reduce friendly fire damage by the teamscale
-		damage = floor( damage * damageDef->GetFloat ( "teamScale", "0.5" ) );
+		damage = floor( damage * damageDef->GetFloat ( "teamScale", "0.5" ) * 0 );
 
 
 	}

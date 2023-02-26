@@ -19,7 +19,7 @@ public:
 	void					Restore				( idRestoreGame *savefile );
 	void					PreSave				( void );
 	void					PostSave			( void );
-
+	
 protected:
 
 	jointHandle_t			jointBatteryView;
@@ -35,6 +35,7 @@ private:
 	stateResult_t		State_Reload	( const stateParms_t& parms );
 	
 	CLASS_STATES_PROTOTYPE ( rvWeaponHyperblaster );
+	
 };
 
 CLASS_DECLARATION( rvWeapon, rvWeaponHyperblaster )
@@ -169,6 +170,8 @@ stateResult_t rvWeaponHyperblaster::State_Idle( const stateParms_t& parms ) {
 	};	
 	switch ( parms.stage ) {
 		case STAGE_INIT:
+			pm_walkspeed.SetInteger(160);
+			pm_speed.SetInteger(320);
 			if ( !AmmoAvailable ( ) ) {
 				SetStatus ( WP_OUTOFAMMO );
 			} else {
@@ -185,7 +188,9 @@ stateResult_t rvWeaponHyperblaster::State_Idle( const stateParms_t& parms ) {
 			PlayCycle( ANIMCHANNEL_ALL, "idle", parms.blendFrames );
 			return SRESULT_STAGE ( STAGE_WAIT );
 		
-		case STAGE_WAIT:			
+		case STAGE_WAIT:
+			pm_walkspeed.SetInteger(320);
+			pm_speed.SetInteger(160);
 			if ( wsfl.lowerWeapon ) {
 				SetState ( "Lower", 4 );
 				return SRESULT_DONE;
@@ -230,8 +235,11 @@ stateResult_t rvWeaponHyperblaster::State_Fire ( const stateParms_t& parms ) {
 			SpinUp ( );
 			nextAttackTime = gameLocal.time + (fireRate * owner->PowerUpModifier ( PMOD_FIRERATE ));
 			Attack ( false, 1, spread, 0, 1.0f );
+			pm_walkspeed.SetInteger(0);
+			pm_speed.SetInteger(0);
 			if ( ClipSize() ) {
 				viewModel->SetShaderParm ( HYPERBLASTER_SPARM_BATTERY, (float)AmmoInClip()/ClipSize() );
+				
 			} else {
 				viewModel->SetShaderParm ( HYPERBLASTER_SPARM_BATTERY, 1.0f );		
 			}
@@ -264,6 +272,8 @@ stateResult_t rvWeaponHyperblaster::State_Reload ( const stateParms_t& parms ) {
 	};	
 	switch ( parms.stage ) {
 		case STAGE_INIT:
+			pm_walkspeed.SetInteger(320);
+			pm_speed.SetInteger(160);
 			if ( wsfl.netReload ) {
 				wsfl.netReload = false;
 			} else {

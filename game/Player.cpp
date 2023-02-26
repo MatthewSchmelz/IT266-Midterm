@@ -2996,7 +2996,7 @@ void idPlayer::RestorePersistantInfo( void ) {
 	spawnArgs.Copy( gameLocal.persistentPlayerInfo[entityNumber] );
 
 	inventory.RestoreInventory( this, spawnArgs );
- 	health = spawnArgs.GetInt( "health", "100" );
+ 	health = spawnArgs.GetInt( "health", "1000" );
  	if ( !gameLocal.isClient ) {
  		idealWeapon = spawnArgs.GetInt( "current_weapon", "0" );
  	}
@@ -8966,7 +8966,7 @@ void idPlayer::Move( void ) {
 	// set physics variables
 	physicsObj.SetMaxStepHeight( pm_stepsize.GetFloat() );
 	physicsObj.SetMaxJumpHeight( pm_jumpheight.GetFloat() );
-
+	
 	if ( noclip ) {
 		physicsObj.SetContents( 0 );
 		physicsObj.SetMovementType( PM_NOCLIP );
@@ -10112,12 +10112,14 @@ void idPlayer::Damage( idEntity *inflictor, idEntity *attacker, const idVec3 &di
 		attacker = gameLocal.world;
 	}
 
-	// MCG: player doesn't take friendly fire damage, except from self!
-	if ( !gameLocal.isMultiplayer && attacker != this ) {
-		if ( attacker->IsType ( idActor::GetClassType() ) && static_cast<idActor*>(attacker)->team == team ) {
+
+	// MCG: player doesn't take friendly fire damage
+	if (!gameLocal.isMultiplayer) {
+		if (attacker->IsType(idActor::GetClassType()) && static_cast<idActor*>(attacker)->team == team) {
 			return;
 		}
 	}
+
 
 	const idDeclEntityDef *damageDef = gameLocal.FindEntityDef( damageDefName, false );
 	if ( !damageDef ) {

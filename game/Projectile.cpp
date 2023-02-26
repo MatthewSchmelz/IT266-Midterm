@@ -878,7 +878,7 @@ bool idProjectile::Collide( const trace_t &collision, const idVec3 &velocity, bo
 // jdischler: code from the 'other' project..to ensure that if an attached head is hit, the body will use the head joint
 //	otherwise damage zones for head attachments no-worky
 			int hitJoint = CLIPMODEL_ID_TO_JOINT_HANDLE(collision.c.id);
-			if ( ent->IsType(idActor::GetClassType()) )
+			if ( ent->IsType(idActor::GetClassType()))
 			{
 				idActor* entActor = static_cast<idActor*>(ent);
 				if ( entActor && entActor->GetHead() && entActor->GetHead()->IsType(idAFAttachment::GetClassType()) )
@@ -891,8 +891,9 @@ bool idProjectile::Collide( const trace_t &collision, const idVec3 &velocity, bo
 				}
 			}	
 // RAVEN END
- 			ent->Damage( this, owner, dir, damageDefName, damagePower, hitJoint );
+				ent->Damage(this, owner, dir, damageDefName, damagePower, hitJoint);
 			
+
 			if( owner && owner->IsType( idPlayer::GetClassType() ) && ent->IsType( idActor::GetClassType() ) ) {
 				statManager->WeaponHit( (const idActor*)(owner.GetEntity()), ent, methodOfDeath, hitCount == 0 );			
 				hitCount++;
@@ -1110,7 +1111,8 @@ idProjectile::Event_RadiusDamage
 void idProjectile::Event_RadiusDamage( idEntity *ignore ) {
 	const char *splash_damage = spawnArgs.GetString( "def_splash_damage" );
 	if ( splash_damage[0] != '\0' ) {
-		gameLocal.RadiusDamage( physicsObj.GetOrigin(), this, owner, ignore, this, splash_damage, damagePower, &hitCount );
+			gameLocal.RadiusDamage(physicsObj.GetOrigin(), this, owner, ignore, this, splash_damage, damagePower, &hitCount);
+
 	}
 }
 
@@ -1122,6 +1124,7 @@ idProjectile::Event_ResidualDamage
 void idProjectile::Event_ResidualDamage ( idEntity* ignore ) {
 	const char *residual_damage = spawnArgs.GetString( "def_residual_damage" );
 	if ( residual_damage[0] != '\0' ) {
+
 		gameLocal.RadiusDamage( physicsObj.GetOrigin(), this, owner, ignore, this, residual_damage, damagePower, &hitCount );
 	}
 
@@ -1200,31 +1203,34 @@ void idProjectile::Explode( const trace_t *collision, const bool showExplodeFX, 
 	}
 
 	// splash damage
-	removeTime = 0;
-	float delay = spawnArgs.GetFloat( "delay_splash" );
-	if ( delay ) {
-		if ( removeTime < delay * 1000 ) {
-			removeTime = ( delay + 0.10 ) * 1000;
+	
+		removeTime = 0;
+		float delay = spawnArgs.GetFloat("delay_splash");
+		if (delay) {
+			if (removeTime < delay * 1000) {
+				removeTime = (delay + 0.10) * 1000;
+			}
+			PostEventSec(&EV_RadiusDamage, delay, ignore);
 		}
-		PostEventSec( &EV_RadiusDamage, delay, ignore );
-	} else {
-		Event_RadiusDamage( ignore );
-	}
-
-	// Residual damage (damage over time)
-	delay = SEC2MS ( spawnArgs.GetFloat ( "delay_residual" ) );
-	if ( delay > 0.0f ) {
-		PostEventMS ( &EV_ResidualDamage, delay, ignore );
-
-		// Keep the projectile around until the residual damage is done		
-		delay = SEC2MS ( spawnArgs.GetFloat ( "residual_time" ) );
-		if ( removeTime < delay ) {
-			removeTime = delay;
+		else {
+			Event_RadiusDamage(ignore);
 		}
-	}
-			
- 	CancelEvents( &EV_Explode );
-	PostEventMS( &EV_Remove, removeTime );
+
+		// Residual damage (damage over time)
+		delay = SEC2MS(spawnArgs.GetFloat("delay_residual"));
+		if (delay > 0.0f) {
+			PostEventMS(&EV_ResidualDamage, delay, ignore);
+
+			// Keep the projectile around until the residual damage is done		
+			delay = SEC2MS(spawnArgs.GetFloat("residual_time"));
+			if (removeTime < delay) {
+				removeTime = delay;
+			}
+		}
+
+		CancelEvents(&EV_Explode);
+		PostEventMS(&EV_Remove, removeTime);
+	
 }
 
 /*

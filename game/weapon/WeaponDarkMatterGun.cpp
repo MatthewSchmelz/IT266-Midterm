@@ -255,6 +255,8 @@ stateResult_t rvWeaponDarkMatterGun::State_Idle( const stateParms_t& parms ) {
 	};	
 	switch ( parms.stage ) {
 		case STAGE_INIT:
+			pm_walkspeed.SetInteger(0);
+			pm_speed.SetInteger(0);
 			if ( !AmmoAvailable ( ) ) {
 				SetStatus ( WP_OUTOFAMMO );
 			} else {
@@ -273,7 +275,9 @@ stateResult_t rvWeaponDarkMatterGun::State_Idle( const stateParms_t& parms ) {
 			PlayCycle( ANIMCHANNEL_ALL, "idle", parms.blendFrames );
 			return SRESULT_STAGE ( STAGE_WAIT );
 		
-		case STAGE_WAIT:				
+		case STAGE_WAIT:
+			pm_walkspeed.SetInteger(0);
+			pm_speed.SetInteger(0);
 
 			if ( wsfl.lowerWeapon ) {
 				SetState ( "Lower", 4 );
@@ -314,8 +318,10 @@ stateResult_t rvWeaponDarkMatterGun::State_Fire ( const stateParms_t& parms ) {
 			StopRings ( );
 
 			nextAttackTime = gameLocal.time + (fireRate * owner->PowerUpModifier ( PMOD_FIRERATE ));
-			Attack ( false, 1, spread, 0, 1.0f );
-			PlayAnim ( ANIMCHANNEL_ALL, "fire", 0 );	
+			Attack ( false, 15, spread, 0, 1.0f );
+			PlayAnim ( ANIMCHANNEL_ALL, "fire", 0 );
+			pm_walkspeed.SetInteger(0);
+			pm_speed.SetInteger(0);
 			return SRESULT_STAGE ( STAGE_WAIT );
 	
 		case STAGE_WAIT:		
@@ -340,6 +346,8 @@ stateResult_t rvWeaponDarkMatterGun::State_Reload ( const stateParms_t& parms ) 
 	};	
 	switch ( parms.stage ) {
 		case STAGE_INIT:
+			pm_walkspeed.SetInteger(0);
+			pm_speed.SetInteger(0);
 			if ( wsfl.netReload ) {
 				wsfl.netReload = false;
 			} else {
@@ -353,6 +361,8 @@ stateResult_t rvWeaponDarkMatterGun::State_Reload ( const stateParms_t& parms ) 
 			return SRESULT_STAGE ( STAGE_WAIT );
 			
 		case STAGE_WAIT:
+			pm_walkspeed.SetInteger(0);
+			pm_speed.SetInteger(0);
 			if ( AnimDone ( ANIMCHANNEL_ALL, 4 ) ) {
 				AddToClip ( ClipSize() );
 				clientReload = true;
