@@ -196,7 +196,7 @@ stateResult_t rvWeaponRailgun::State_Fire ( const stateParms_t& parms ) {
 		}
 		else {
 			nextAttackTime = gameLocal.time + (fireRate * owner->PowerUpModifier(PMOD_FIRERATE));
-			Attack(false, 1000, spread, 0, 1.0f);
+			Attack(false, 100, spread, 0, 1.0f);
 			pm_walkspeed.SetInteger(0);
 			pm_speed.SetInteger(0);
 		}
