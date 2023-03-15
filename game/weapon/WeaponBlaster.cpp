@@ -303,15 +303,15 @@ stateResult_t rvWeaponBlaster::State_Idle ( const stateParms_t& parms ) {
 	};	
 	switch ( parms.stage ) {
 		case IDLE_INIT:	
-			pm_walkspeed.SetInteger(360);
-			pm_speed.SetInteger(180);
+			pm_walkspeed.SetInteger(360 + (10 * dexterity.GetInteger()));
+			pm_speed.SetInteger(180 + (10 * dexterity.GetInteger()));
 			SetStatus ( WP_READY );
 			PlayCycle( ANIMCHANNEL_ALL, "idle", parms.blendFrames );
 			return SRESULT_STAGE ( IDLE_WAIT );
 			
 		case IDLE_WAIT:
-			pm_walkspeed.SetInteger(320);
-			pm_speed.SetInteger(160);
+			pm_walkspeed.SetInteger(320 + (10 * dexterity.GetInteger()));
+			pm_speed.SetInteger(160 + (10 * dexterity.GetInteger()));
 			if ( wsfl.lowerWeapon ) {
 				SetState ( "Lower", 4 );
 				return SRESULT_DONE;
@@ -379,8 +379,8 @@ stateResult_t rvWeaponBlaster::State_Charged ( const stateParms_t& parms ) {
 	switch ( parms.stage ) {
 		case CHARGED_INIT:		
 			viewModel->SetShaderParm ( BLASTER_SPARM_CHARGEGLOW, 1.0f  );
-			pm_walkspeed.SetInteger(50);
-			pm_speed.SetInteger(50);
+			pm_walkspeed.SetInteger(50 + (10 * dexterity.GetInteger()));
+			pm_speed.SetInteger(50 + (10 * dexterity.GetInteger()));
 			StopSound ( SND_CHANNEL_ITEM, false );
 			StartSound ( "snd_charge_loop", SND_CHANNEL_ITEM, 0, false, NULL );
 			StartSound ( "snd_charge_click", SND_CHANNEL_BODY, 0, false, NULL );
@@ -429,15 +429,15 @@ stateResult_t rvWeaponBlaster::State_Fire ( const stateParms_t& parms ) {
 				return SRESULT_DONE;
 			}
 
-			pm_walkspeed.SetInteger(80);
-			pm_speed.SetInteger(80);
+			pm_walkspeed.SetInteger(80 + (10 * dexterity.GetInteger()));
+			pm_speed.SetInteger(80 + (10 * dexterity.GetInteger()));
 	
 			if ( gameLocal.time - fireHeldTime > chargeTime ) {	
-				Attack ( true, 1, spread, 0.1, 1.0f );
+				Attack ( true, 1 + melee.GetInteger(), spread, 0.1, 1.0f);
 				PlayEffect ( "fx_chargedflash", barrelJointView, false );
 				PlayAnim( ANIMCHANNEL_ALL, "chargedfire", parms.blendFrames );
 			} else {
-				Attack ( false, 1, spread, 0.1, 1.0f );
+				Attack ( false, 1 + melee.GetInteger(), spread, 0.1, 1.0f);
 				PlayEffect ( "fx_normalflash", barrelJointView, false );
 				PlayAnim( ANIMCHANNEL_ALL, "fire", parms.blendFrames );
 			}

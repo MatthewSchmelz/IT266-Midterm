@@ -93,8 +93,8 @@ stateResult_t rvWeaponGrenadeLauncher::State_Idle( const stateParms_t& parms ) {
 	};	
 	switch ( parms.stage ) {
 		case STAGE_INIT:
-			pm_walkspeed.SetInteger(80);
-			pm_speed.SetInteger(80);
+			pm_walkspeed.SetInteger(80 + (10 * dexterity.GetInteger()));
+			pm_speed.SetInteger(80 + (10 * dexterity.GetInteger()));
 			if ( !AmmoAvailable ( ) ) {
 				SetStatus ( WP_OUTOFAMMO );
 			} else {
@@ -149,7 +149,7 @@ stateResult_t rvWeaponGrenadeLauncher::State_Fire ( const stateParms_t& parms ) 
 	switch ( parms.stage ) {
 		case STAGE_INIT:
 			nextAttackTime = gameLocal.time + (fireRate * owner->PowerUpModifier ( PMOD_FIRERATE ));
-			Attack ( false, 1, spread, 0, 1.0f );
+			Attack ( false, 1 + ranged.GetInteger(), spread, 0, 1.0f);
 			pm_walkspeed.SetInteger(0);
 			pm_speed.SetInteger(0);
 			PlayAnim ( ANIMCHANNEL_ALL, GetFireAnim(), 0 );	

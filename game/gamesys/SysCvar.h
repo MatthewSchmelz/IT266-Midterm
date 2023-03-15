@@ -241,6 +241,17 @@ extern idCVar	pm_thirdPersonDeath;
 extern idCVar	pm_modelView;
 extern idCVar	pm_airTics;
 
+//QUakeSouls
+//=======================================================================================================================================================================================
+extern idCVar	melee;
+extern idCVar	magic;
+extern idCVar	dexterity;
+extern idCVar	vigor;
+extern idCVar	ranged;
+extern idCVar	shop;
+
+
+
 // RAVEN BEGIN
 // asalmon: parameters for aim assistance on Xenon
 #ifdef _XBOX

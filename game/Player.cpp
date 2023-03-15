@@ -3619,6 +3619,7 @@ idPlayer::DrawHUD
 void idPlayer::DrawHUD( idUserInterface *_hud ) {
 	idUserInterface * cursor = idPlayer::cursor;
  
+	//If not player??
 	if ( !gameLocal.GetLocalPlayer() ) {
 		// server netdemo
 		if ( gameLocal.GetDemoState() == DEMO_PLAYING && gameLocal.IsServerDemo() && gameLocal.GetDemoFollowClient() == entityNumber ) {
@@ -3634,6 +3635,7 @@ void idPlayer::DrawHUD( idUserInterface *_hud ) {
 			gameLocal.GetLocalPlayer()->hudTeam = team;
 		}
 	
+		//probably updatig the HUD of a spectator
 		// if updating the hud of a followed client
 		idPlayer *p = gameLocal.GetLocalPlayer();
 		if ( p->spectating && p->spectator == entityNumber ) {
@@ -3668,6 +3670,9 @@ void idPlayer::DrawHUD( idUserInterface *_hud ) {
 	if ( gameLocal.GetCamera( ) ) {
 		if ( cinematicHud && !(gameLocal.editors & EDITOR_MODVIEW) ) {
 			cinematicHud->Redraw( gameLocal.time );
+		}
+		if (shop.GetBool()) {
+			cinematicHud->Redraw(gameLocal.time);
 		}
 		return;
 	}
@@ -3755,6 +3760,12 @@ void idPlayer::DrawHUD( idUserInterface *_hud ) {
 	 	_hud->Redraw( gameLocal.realClientTime );
 	}
 
+
+
+
+
+
+ //Multiplayer HUD, don't worry
 	if ( gameLocal.isMultiplayer ) {
 		idUserInterface* _mphud = mphud;
 		// server netdemos don't have a local player, grab the right mphud

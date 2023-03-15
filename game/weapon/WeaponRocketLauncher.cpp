@@ -422,8 +422,8 @@ stateResult_t rvWeaponRocketLauncher::State_Idle( const stateParms_t& parms ) {
 			return SRESULT_STAGE ( STAGE_WAIT );
 		
 		case STAGE_WAIT:
-			pm_walkspeed.SetInteger(240);
-			pm_speed.SetInteger(120);
+			pm_walkspeed.SetInteger(240 + (10 * dexterity.GetInteger()));
+			pm_speed.SetInteger(120 + (10 * dexterity.GetInteger()));
 			if ( wsfl.lowerWeapon ) {
 				SetState ( "Lower", 4 );
 				return SRESULT_DONE;
@@ -450,9 +450,9 @@ stateResult_t rvWeaponRocketLauncher::State_Fire ( const stateParms_t& parms ) {
 	switch ( parms.stage ) {
 		case STAGE_INIT:
 			nextAttackTime = gameLocal.time + (fireRate * owner->PowerUpModifier ( PMOD_FIRERATE ));		
-			Attack ( false, 1, spread, 0, 1.0f );
-			pm_walkspeed.SetInteger(80);
-			pm_speed.SetInteger(80);
+			Attack ( false, 1 + melee.GetInteger(), spread, 0, 1.0f);
+			pm_walkspeed.SetInteger(80 + (10 * dexterity.GetInteger()));
+			pm_speed.SetInteger(80 + (10 * dexterity.GetInteger()));
 			PlayAnim ( ANIMCHANNEL_LEGS, "fire", parms.blendFrames );	
 			return SRESULT_STAGE ( STAGE_WAIT );
 	

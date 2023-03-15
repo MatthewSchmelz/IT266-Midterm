@@ -472,6 +472,25 @@ void rvAIMedic::Think ( void ) {
 
 //	while( entMedic.getKey("alive") == "true" && entMedic.getKey("healer") == "1")	
 //???
+	idPlayer* player =gameLocal.GetLocalPlayer();
+	if (!player) {
+		common->Printf("Not a Player");
+		return;
+	}
+	if (DistanceTo( player ) < (patientRange/2)) {
+		common->Printf("We're quite close");
+		
+	}
+	else {
+		
+		
+	}
+
+
+
+
+
+
 	if ( !noAutoHeal )
 	{
 		if ( gameLocal.GetTime() - lastPatientCheckTime > 1000 )

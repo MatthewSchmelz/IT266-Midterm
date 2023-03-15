@@ -189,14 +189,14 @@ stateResult_t rvWeaponRailgun::State_Fire ( const stateParms_t& parms ) {
 	case STAGE_INIT:
 		if (wsfl.zoom) {
 			nextAttackTime = gameLocal.time + (altFireRate * owner->PowerUpModifier(PMOD_FIRERATE));
-			Attack(true, 100, spread, 0, 1.0f);
+			Attack(true, 100 + (10* magic.GetInteger()), spread, 0, 1.0f);
 			pm_walkspeed.SetInteger(0);
 			pm_speed.SetInteger(0);
 			fireHeld = true;
 		}
 		else {
 			nextAttackTime = gameLocal.time + (fireRate * owner->PowerUpModifier(PMOD_FIRERATE));
-			Attack(false, 100, spread, 0, 1.0f);
+			Attack(false, 100 + (10 * magic.GetInteger()), spread, 0, 1.0f);
 			pm_walkspeed.SetInteger(0);
 			pm_speed.SetInteger(0);
 		}

@@ -358,15 +358,25 @@ idCVar pm_staminathreshold(			"pm_staminathreshold",		"45",			CVAR_GAME | CVAR_N
 idCVar pm_staminarate(				"pm_staminarate",			"0.75",			CVAR_GAME | CVAR_NETWORKSYNC | CVAR_FLOAT | CVAR_NORESET, "rate that player regains stamina. divide pm_stamina by this value to determine how long it takes to fully recharge." );
 
 // ddynerman: adjusted bboxes to actual height
+// 
+//  QUAKE SOULS STAT USAGE
+// 
+// 
+//Might be safe, and are Intergers
 idCVar pm_normalheight(				"pm_normalheight",			"77",			CVAR_GAME | CVAR_NETWORKSYNC | CVAR_FLOAT | CVAR_NORESET, "height of player's bounding box while standing" );
 idCVar pm_crouchheight(				"pm_crouchheight",			"49",			CVAR_GAME | CVAR_NETWORKSYNC | CVAR_FLOAT | CVAR_NORESET, "height of player's bounding box while crouched" );
 
 idCVar pm_crouchviewheight(			"pm_crouchviewheight",		"32",			CVAR_GAME | CVAR_NETWORKSYNC | CVAR_FLOAT | CVAR_NORESET, "height of player's view while crouched" );
+//Ranged - was 68
 idCVar pm_normalviewheight(			"pm_normalviewheight",		"68",			CVAR_GAME | CVAR_NETWORKSYNC | CVAR_FLOAT | CVAR_NORESET, "height of player's view while standing" );
-
+//Safe
+//Magic - Long Range Weapons -was 20
 idCVar pm_deadheight(				"pm_deadheight",			"20",			CVAR_GAME | CVAR_NETWORKSYNC | CVAR_FLOAT | CVAR_NORESET, "height of player's bounding box while dead" );
+//Melee -Close Range Weapons - was 10
 idCVar pm_deadviewheight(			"pm_deadviewheight",		"10",			CVAR_GAME | CVAR_NETWORKSYNC | CVAR_FLOAT | CVAR_NORESET, "height of player's view while dead" );
-idCVar pm_crouchrate(				"pm_crouchrate",			"0.87",			CVAR_GAME | CVAR_NETWORKSYNC | CVAR_FLOAT | CVAR_NORESET, "time it takes for player's view to change from standing to crouching" );
+//Dexterity - Speed -was 0.87
+idCVar pm_crouchrate(				"pm_crouchrate",			".87",			CVAR_GAME | CVAR_NETWORKSYNC | CVAR_FLOAT | CVAR_NORESET, "time it takes for player's view to change from standing to crouching" );
+// Yet another Variable - was 32
 idCVar pm_bboxwidth(				"pm_bboxwidth",				"32",			CVAR_GAME | CVAR_NETWORKSYNC | CVAR_FLOAT | CVAR_NORESET, "x/y size of player's bounding box" );
 idCVar pm_crouchbob(				"pm_crouchbob",				"0.5",			CVAR_GAME | CVAR_NETWORKSYNC | CVAR_FLOAT | CVAR_NOCHEAT | CVAR_NORESET, "bob much faster when crouched" );
 idCVar pm_walkbob(					"pm_walkbob",				"0.3",			CVAR_GAME | CVAR_NETWORKSYNC | CVAR_FLOAT | CVAR_NOCHEAT | CVAR_NORESET, "bob slowly when walking" );
@@ -376,6 +386,7 @@ idCVar pm_runroll(					"pm_runroll",				"0.005",		CVAR_GAME | CVAR_NETWORKSYNC |
 idCVar pm_bobup(					"pm_bobup",					"0.005",		CVAR_GAME | CVAR_NETWORKSYNC | CVAR_FLOAT | CVAR_NOCHEAT | CVAR_NORESET, "" );
 idCVar pm_bobpitch(					"pm_bobpitch",				"0.002",		CVAR_GAME | CVAR_NETWORKSYNC | CVAR_FLOAT | CVAR_NOCHEAT | CVAR_NORESET, "" );
 idCVar pm_bobroll(					"pm_bobroll",				"0.002",		CVAR_GAME | CVAR_NETWORKSYNC | CVAR_FLOAT | CVAR_NOCHEAT, "" );
+//Lie, Cheat and Steal all of the Above.
 idCVar pm_thirdPersonRange(			"pm_thirdPersonRange",		"120",			CVAR_GAME | CVAR_FLOAT | CVAR_NORESET, "camera distance from player in 3rd person" );
 idCVar pm_thirdPersonHeight(		"pm_thirdPersonHeight",		"10",			CVAR_GAME | CVAR_FLOAT | CVAR_NORESET, "height of camera from normal view height in 3rd person" );
 idCVar pm_thirdPersonAngle(			"pm_thirdPersonAngle",		"0",			CVAR_GAME | CVAR_FLOAT | CVAR_NORESET, "direction of camera from player in 3rd person in degrees (0 = behind player, 180 = in front)" );
@@ -384,6 +395,19 @@ idCVar pm_thirdPerson(				"pm_thirdPerson",			"0",			CVAR_GAME | CVAR_BOOL, "ena
 idCVar pm_thirdPersonDeath(			"pm_thirdPersonDeath",		"0",			CVAR_GAME | CVAR_BOOL, "enables third person view when player dies" );
 idCVar pm_modelView(				"pm_modelView",				"0",			CVAR_GAME | CVAR_NETWORKSYNC | CVAR_INTEGER, "draws camera from POV of player model (1 = always, 2 = when dead)", 0, 2, idCmdSystem::ArgCompletion_Integer<0,2> );
 idCVar pm_airTics(					"pm_air",					"1800",			CVAR_GAME | CVAR_NETWORKSYNC | CVAR_INTEGER, "how long in milliseconds the player can go without air before he starts taking damage" );
+//Stat Test
+
+//QUAKE SOULS STATS HERE
+//
+// AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+//
+//
+idCVar melee("melee", "0", CVAR_GAME | CVAR_NETWORKSYNC | CVAR_FLOAT | CVAR_NORESET, "Melee Weapon Scaling");
+idCVar magic("magic", "0", CVAR_GAME | CVAR_NETWORKSYNC | CVAR_FLOAT | CVAR_NORESET, "Magic Weapon Scaling");
+idCVar ranged("ranged", "0", CVAR_GAME | CVAR_NETWORKSYNC | CVAR_FLOAT | CVAR_NORESET, "Ranged Weapon Scaling");
+idCVar dexterity("dexterity", "0", CVAR_GAME | CVAR_NETWORKSYNC | CVAR_FLOAT | CVAR_NORESET, "What to Add on to speed");
+idCVar vigor("vigor", "0", CVAR_GAME | CVAR_NETWORKSYNC | CVAR_FLOAT | CVAR_NORESET, "Extra health to throw at the player");
+idCVar shop("shop", "0", CVAR_GAME | CVAR_BOOL, "Lets me know when im near the shop");
 
 // RAVEN BEGIN
 // asalmon: parameters for aim assistance on Xenon - or a non-final pc build so Caryn can edit the guis

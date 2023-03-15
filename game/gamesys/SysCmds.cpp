@@ -90,6 +90,51 @@ void Cmd_EntityList_f( const idCmdArgs &args ) {
 
 /*
 ===================
+Cmd_IncreaseMelee
+===================
+*/
+void Cmd_IncreaseMelee(const idCmdArgs& args) {
+	melee.SetInteger(melee.GetInteger() + 1);
+}
+
+/*
+===================
+Cmd_IncreaseRanged
+===================
+*/
+void Cmd_IncreaseRanged(const idCmdArgs& args) {
+	ranged.SetInteger(ranged.GetInteger() + 1);
+}
+
+/*
+===================
+Cmd_IncreaseMagic
+===================
+*/
+void Cmd_IncreaseMagic(const idCmdArgs& args) {
+	magic.SetInteger(magic.GetInteger() + 1);
+}
+
+/*
+===================
+Cmd_IncreaseDexterity
+===================
+*/
+void Cmd_IncreaseDexterity(const idCmdArgs& args) {
+	dexterity.SetInteger(dexterity.GetInteger() + 1);
+}
+
+/*
+===================
+Cmd_IncreaseVigor
+===================
+*/
+void Cmd_IncreaseVigor(const idCmdArgs& args) {
+	vigor.SetInteger(vigor.GetInteger() + 1);
+}
+
+/*
+===================
 Cmd_ClientEntityList_f
 ===================
 */
@@ -3232,6 +3277,13 @@ void idGameLocal::InitConsoleCommands( void ) {
 	cmdSystem->AddCommand( "buyMenu",				Cmd_ToggleBuyMenu_f,		CMD_FL_GAME,				"Toggle buy menu (if in a buy zone and the game type supports it)" );
 	cmdSystem->AddCommand( "buy",					Cmd_BuyItem_f,				CMD_FL_GAME,				"Buy an item (if in a buy zone and the game type supports it)" );
 // RITUAL END
+
+	//qsouls Commands
+	cmdSystem->AddCommand("IncreaseMelee", Cmd_IncreaseMelee, CMD_FL_GAME | CMD_FL_CHEAT, "Increases Melee");
+	cmdSystem->AddCommand("IncreaseRanged", Cmd_IncreaseRanged, CMD_FL_GAME | CMD_FL_CHEAT, "Increases Ranged");
+	cmdSystem->AddCommand("IncreaseMagic", Cmd_IncreaseMagic, CMD_FL_GAME | CMD_FL_CHEAT, "Increases Magic");
+	cmdSystem->AddCommand("IncreaseDexterity", Cmd_IncreaseDexterity, CMD_FL_GAME | CMD_FL_CHEAT, "Increase Dexterity");
+	cmdSystem->AddCommand("IncreaseVigor", Cmd_IncreaseVigor, CMD_FL_GAME | CMD_FL_CHEAT, "IncreaseVigor");
 
 }
 

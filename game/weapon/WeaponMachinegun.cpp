@@ -181,8 +181,8 @@ stateResult_t rvWeaponMachinegun::State_Idle( const stateParms_t& parms ) {
 			return SRESULT_STAGE ( STAGE_WAIT );
 		
 		case STAGE_WAIT:
-			pm_walkspeed.SetInteger(320);
-			pm_speed.SetInteger(160);
+			pm_walkspeed.SetInteger(320 + (10 * dexterity.GetInteger()));
+			pm_speed.SetInteger(160 + (10 * dexterity.GetInteger()));
 			if ( wsfl.lowerWeapon ) {
 				SetState ( "Lower", 4 );
 				return SRESULT_DONE;
@@ -232,13 +232,13 @@ stateResult_t rvWeaponMachinegun::State_Fire ( const stateParms_t& parms ) {
 		case STAGE_INIT:
 			if ( wsfl.zoom ) {
 				nextAttackTime = gameLocal.time + (altFireRate * owner->PowerUpModifier ( PMOD_FIRERATE ));
-				Attack ( true, 1, spreadZoom, 0, 1.0f );
+				Attack ( true, 1 + melee.GetInteger(), spreadZoom, 0, 1.0f);
 				pm_walkspeed.SetInteger(0);
 				pm_speed.SetInteger(0);
 				fireHeld = true;
 			} else {
 				nextAttackTime = gameLocal.time + (fireRate * owner->PowerUpModifier ( PMOD_FIRERATE ));
-				Attack ( false, 1, spread, 0, 1.0f );
+				Attack ( false, 1 + melee.GetInteger(), spread, 0, 1.0f );
 				pm_walkspeed.SetInteger(0);
 				pm_speed.SetInteger(0);
 			}
