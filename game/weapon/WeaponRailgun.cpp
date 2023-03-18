@@ -141,6 +141,8 @@ stateResult_t rvWeaponRailgun::State_Idle( const stateParms_t& parms ) {
 	};	
 	switch ( parms.stage ) {
 		case STAGE_INIT:
+			pm_walkspeed.SetInteger(360 + (10 * dexterity.GetInteger()));
+			pm_speed.SetInteger(180 + (10 * dexterity.GetInteger()));
 			if ( !AmmoAvailable ( ) ) {
 				SetStatus ( WP_OUTOFAMMO );
 			} else {
@@ -151,7 +153,9 @@ stateResult_t rvWeaponRailgun::State_Idle( const stateParms_t& parms ) {
 			PlayCycle( ANIMCHANNEL_ALL, "idle", parms.blendFrames );
 			return SRESULT_STAGE ( STAGE_WAIT );
 		
-		case STAGE_WAIT:			
+		case STAGE_WAIT:	
+			pm_walkspeed.SetInteger(360 + (10 * dexterity.GetInteger()));
+			pm_speed.SetInteger(180 + (10 * dexterity.GetInteger()));
 			if ( wsfl.lowerWeapon ) {
 				StopSound( SND_CHANNEL_BODY2, false );
 				SetState ( "Lower", 4 );

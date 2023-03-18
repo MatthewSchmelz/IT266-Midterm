@@ -94,8 +94,11 @@ Cmd_IncreaseMelee
 ===================
 */
 void Cmd_IncreaseMelee(const idCmdArgs& args) {
-	melee.SetInteger(melee.GetInteger() + 1);
+	if (shop.GetInteger() == 1) {
+		melee.SetInteger(melee.GetInteger() + 1);
+	}
 }
+
 
 /*
 ===================
@@ -103,8 +106,11 @@ Cmd_IncreaseRanged
 ===================
 */
 void Cmd_IncreaseRanged(const idCmdArgs& args) {
-	ranged.SetInteger(ranged.GetInteger() + 1);
+	if (shop.GetInteger() == 1) {
+		ranged.SetInteger(ranged.GetInteger() + 1);
+	}
 }
+
 
 /*
 ===================
@@ -112,7 +118,9 @@ Cmd_IncreaseMagic
 ===================
 */
 void Cmd_IncreaseMagic(const idCmdArgs& args) {
-	magic.SetInteger(magic.GetInteger() + 1);
+	if (shop.GetInteger() == 1) {
+		magic.SetInteger(magic.GetInteger() + 1);
+	}
 }
 
 /*
@@ -121,7 +129,9 @@ Cmd_IncreaseDexterity
 ===================
 */
 void Cmd_IncreaseDexterity(const idCmdArgs& args) {
-	dexterity.SetInteger(dexterity.GetInteger() + 1);
+	if (shop.GetInteger() == 1) {
+		dexterity.SetInteger(dexterity.GetInteger() + 1);
+	}
 }
 
 /*
@@ -130,7 +140,11 @@ Cmd_IncreaseVigor
 ===================
 */
 void Cmd_IncreaseVigor(const idCmdArgs& args) {
-	vigor.SetInteger(vigor.GetInteger() + 1);
+	if (shop.GetInteger() == 1) {
+		vigor.SetInteger(vigor.GetInteger() + 1);
+		idPlayer* player = gameLocal.GetLocalPlayer();
+		player->health = 100 + (10 * vigor.GetInteger());
+	}
 }
 
 /*

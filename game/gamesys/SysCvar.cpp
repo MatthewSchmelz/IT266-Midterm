@@ -407,7 +407,7 @@ idCVar magic("magic", "0", CVAR_GAME | CVAR_NETWORKSYNC | CVAR_FLOAT | CVAR_NORE
 idCVar ranged("ranged", "0", CVAR_GAME | CVAR_NETWORKSYNC | CVAR_FLOAT | CVAR_NORESET, "Ranged Weapon Scaling");
 idCVar dexterity("dexterity", "0", CVAR_GAME | CVAR_NETWORKSYNC | CVAR_FLOAT | CVAR_NORESET, "What to Add on to speed");
 idCVar vigor("vigor", "0", CVAR_GAME | CVAR_NETWORKSYNC | CVAR_FLOAT | CVAR_NORESET, "Extra health to throw at the player");
-idCVar shop("shop", "0", CVAR_GAME | CVAR_BOOL, "Lets me know when im near the shop");
+idCVar shop("shop", "0", CVAR_GAME | CVAR_NETWORKSYNC | CVAR_INTEGER | CVAR_NORESET, "Lets me know when im near the shop");
 
 // RAVEN BEGIN
 // asalmon: parameters for aim assistance on Xenon - or a non-final pc build so Caryn can edit the guis

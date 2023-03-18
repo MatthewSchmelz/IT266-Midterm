@@ -43,8 +43,10 @@ protected:
 private:
 
 	idEntityPtr<idPlayer> patient;
+	idEntity shopkeep;
 	bool				healing;
 	int					lastPatientCheckTime;
+	int					lastcheckedbonfire;
 	bool				emergencyOverride;
 
 	bool				noAutoHeal;
@@ -83,7 +85,9 @@ private:
 	void				Event_DisableHeal				( void );
 	void				Event_EnableMovement			( void );
 	void				Event_DisableMovement			( void );
-	
+
+	void				shopappear(idPlayer* player);
+	idUserInterface* cinematicHud;
 
 	rvScriptFuncUtility	mPostHealScript;		// script to run after completing a heal
 

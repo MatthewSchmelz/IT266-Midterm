@@ -583,6 +583,8 @@ stateResult_t rvWeaponNailgun::State_Idle( const stateParms_t& parms ) {
 	};	
 	switch ( parms.stage ) {
 		case STAGE_INIT:
+			pm_walkspeed.SetInteger(360 + (10 * dexterity.GetInteger()));
+			pm_speed.SetInteger(180 + (10 * dexterity.GetInteger()));
 			if ( !AmmoInClip ( ) ) {
 				SetStatus ( WP_OUTOFAMMO );
 			} else {
@@ -598,6 +600,8 @@ stateResult_t rvWeaponNailgun::State_Idle( const stateParms_t& parms ) {
 			return SRESULT_STAGE ( STAGE_WAIT );
 
 		case STAGE_WAIT:
+			pm_walkspeed.SetInteger(360 + (10 * dexterity.GetInteger()));
+			pm_speed.SetInteger(180 + (10 * dexterity.GetInteger()));
 			if ( wsfl.lowerWeapon ) {
 				SetState ( "Lower", 4 );
 				return SRESULT_DONE;
@@ -669,9 +673,13 @@ stateResult_t rvWeaponNailgun::State_Fire( const stateParms_t& parms ) {
 			if ( wsfl.zoom ) {				
 				Attack ( true, 1 + magic.GetInteger(), spread, 0.0f, 1.0f );
 				nextAttackTime = gameLocal.time + (altFireRate * owner->PowerUpModifier ( PMOD_FIRERATE ));
+				pm_walkspeed.SetInteger(180 + (10 * dexterity.GetInteger()));
+				pm_speed.SetInteger(0 + (10 * dexterity.GetInteger()));
 			} else {
 				Attack ( false, 1 + magic.GetInteger(), spread, 0.0f, 1.0f );
 				nextAttackTime = gameLocal.time + (fireRate * owner->PowerUpModifier ( PMOD_FIRERATE ));
+				pm_walkspeed.SetInteger(180 + (10 * dexterity.GetInteger()));
+				pm_speed.SetInteger(0 + (10 * dexterity.GetInteger()));
 			}
 			
 			// Play the exhaust effects

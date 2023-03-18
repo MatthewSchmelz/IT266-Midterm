@@ -462,6 +462,35 @@ bool rvAIMedic::AvailableToTakePatient( void )
 	return false;
 }
 
+
+
+void rvAIMedic::shopappear(idPlayer* player) {
+	if (!player) {
+		common->Printf("Not a Player");
+		return;
+	}
+	if (DistanceTo(player) < (100)) {
+		if (shop.GetInteger() == 0) {
+			shop.SetInteger(1);
+			common->Printf("Should have updated Positive");
+			player->StartBossBattle(this);
+			common->Printf("Finished");
+			lastcheckedbonfire = gameLocal.GetTime();
+		}
+
+
+
+	} else {
+		if ((shop.GetInteger() == 1)  && (gameLocal.GetTime() - lastcheckedbonfire > 5000)) {
+			shop.SetInteger(0);
+			player->hud->SetStateInt("boss_health", -1);
+			player->hud->HandleNamedEvent("hideBossBar");
+			common->Printf("Should have updated Negative");
+		}
+
+	}
+}
+
 /*
 ================
 rvAIMedic::Think
@@ -473,29 +502,16 @@ void rvAIMedic::Think ( void ) {
 //	while( entMedic.getKey("alive") == "true" && entMedic.getKey("healer") == "1")	
 //???
 	idPlayer* player =gameLocal.GetLocalPlayer();
-	if (!player) {
-		common->Printf("Not a Player");
-		return;
-	}
-	if (DistanceTo( player ) < (patientRange/2)) {
-		common->Printf("We're quite close");
-		
-	}
-	else {
-		
-		
-	}
 
 
 
 
-
-
-	if ( !noAutoHeal )
-	{
+	//if ( !noAutoHeal )
+	//{
 		if ( gameLocal.GetTime() - lastPatientCheckTime > 1000 )
 		{
 			lastPatientCheckTime = gameLocal.GetTime();
+			shopappear(player);
 			if ( !patient )
 			{
 				emergencyOverride = false;
@@ -521,7 +537,7 @@ void rvAIMedic::Think ( void ) {
 				*/
 			}
 		}
-	}
+	//} 
 }				
 
 /*

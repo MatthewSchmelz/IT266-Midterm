@@ -892,7 +892,7 @@ bool idInventory::Give( idPlayer *owner, const idDict &spawnArgs, const char *st
 			return false;
 		}
 	} else 	if ( !idStr::Icmp( statname, "health" ) ) {
-		if ( owner->health >= maxHealth ) {
+		if ( owner->health >= maxHealth + (10* vigor.GetInteger()) ) {
 			return false;
 		}
 	} else if ( idStr::FindText( statname, "inclip_" ) == 0 ) {
@@ -2810,7 +2810,7 @@ void idPlayer::SpawnToPoint( const idVec3 &spawn_origin, const idAngles &spawn_a
 	}
 
 	// Any health over max health will tick down
-	if ( health > inventory.maxHealth ) {
+	if ( health > inventory.maxHealth + (10 * vigor.GetInteger())) {
 		nextHealthPulse = gameLocal.time + HEALTH_PULSE;
 	}
 	
@@ -3396,7 +3396,7 @@ void idPlayer::UpdateHudStats( idUserInterface *_hud ) {
 	if ( temp != health ) {		
 		_hud->SetStateInt   ( "player_healthDelta", temp == -1 ? 0 : (temp - health) );
 		_hud->SetStateInt	( "player_health", health < -100 ? -100 : health );
-		_hud->SetStateFloat	( "player_healthpct", idMath::ClampFloat ( 0.0f, 1.0f, (float)health / (float)inventory.maxHealth ) );
+		_hud->SetStateFloat	( "player_healthpct", idMath::ClampFloat ( 0.0f, 1.0f, ((float)health + (10 * vigor.GetInteger())) / ((float)inventory.maxHealth + (10 * vigor.GetInteger()))) );
 		_hud->HandleNamedEvent ( "updateHealth" );
 	}
 		
@@ -3660,7 +3660,7 @@ void idPlayer::DrawHUD( idUserInterface *_hud ) {
 		return;
 	}
 
-	if ( gameLocal.isMultiplayer ) {
+	if ( gameLocal.isMultiplayer  ) {
 		_hud->SetStateBool( "mp", true );
 	} else {
 		_hud->SetStateBool( "mp", false );
@@ -4078,10 +4078,10 @@ bool idPlayer::Give( const char *statname, const char *value, bool dropped ) {
 		vehicleController.Give ( statname, value );
 	}
 
-	int boundaryHealth = inventory.maxHealth;
+	int boundaryHealth = inventory.maxHealth + (10 * vigor.GetInteger());
 	int boundaryArmor = inventory.maxarmor;
 	if( PowerUpActive( POWERUP_GUARD ) ) {
-		boundaryHealth = inventory.maxHealth / 2;
+		boundaryHealth = inventory.maxHealth + (10 * vigor.GetInteger()) / 2;
 		boundaryArmor = inventory.maxarmor / 2;
 	}
 	if( PowerUpActive( POWERUP_SCOUT ) ) {
@@ -4901,12 +4901,12 @@ void idPlayer::UpdatePowerUps( void ) {
 // squirrel: health regen only applies if you have positive health
 		if( health > 0 ) {
 			if ( PowerUpActive ( POWERUP_REGENERATION ) || PowerUpActive ( POWERUP_GUARD ) ) {
-				int healthBoundary = inventory.maxHealth; // health will regen faster under this value, slower above
+				int healthBoundary = inventory.maxHealth + (10 * vigor.GetInteger()); // health will regen faster under this value, slower above
 				int healthTic = 15;
 
 				if( PowerUpActive ( POWERUP_GUARD ) ) {
 					// guard max health == 200, so set the boundary back to 100
-					healthBoundary = inventory.maxHealth / 2;
+					healthBoundary = inventory.maxHealth + (10 * vigor.GetInteger()) / 2;
 					if( PowerUpActive (POWERUP_REGENERATION) ) {
 						healthTic = 30;
 					}
@@ -4933,7 +4933,7 @@ void idPlayer::UpdatePowerUps( void ) {
 					nextHealthPulse = gameLocal.time + HEALTH_PULSE;
 				}	
 			// Health above max technically isnt a powerup but functions as one so handle it here
-			} else if ( health > inventory.maxHealth && gameLocal.isServer ) { 
+			} else if ( health > inventory.maxHealth + (10 * vigor.GetInteger()) && gameLocal.isServer ) {
 				nextHealthPulse = gameLocal.time + HEALTH_PULSE;
 				health--;
 			}
@@ -11194,7 +11194,7 @@ idPlayer::Event_SetHealth
 =============
 */
 void idPlayer::Event_SetHealth( float newHealth ) {
-	health = idMath::ClampInt( 1 , inventory.maxHealth, newHealth );
+	health = idMath::ClampInt( 1 , inventory.maxHealth + (10 * vigor.GetInteger()), newHealth );
 }
 /*
 =============

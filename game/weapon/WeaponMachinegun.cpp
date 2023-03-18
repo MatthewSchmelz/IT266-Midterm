@@ -168,8 +168,8 @@ stateResult_t rvWeaponMachinegun::State_Idle( const stateParms_t& parms ) {
 		STAGE_WAIT,
 	};	
 	switch ( parms.stage ) {
-		pm_walkspeed.SetInteger(160);
-		pm_speed.SetInteger(320);
+		pm_walkspeed.SetInteger(160 + (10 * dexterity.GetInteger()));
+		pm_speed.SetInteger(320 + (10 * dexterity.GetInteger()));
 		case STAGE_INIT:
 			if ( !AmmoAvailable ( ) ) {
 				SetStatus ( WP_OUTOFAMMO );

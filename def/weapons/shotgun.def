@@ -80,8 +80,8 @@ entityDef weapon_shotgun
 	"joint_world_flash"			"muzzle_flash"
 
 	"fireRate"				"2"
-	"spread"				"0"
-	"hitscans"				"5" //modified
+	"spread"				"500000"
+	"hitscans"				"19" //modified
 
 	"inv_weapon"				"weapon_shotgun"
 	"inv_start_ammo_shotgun"		"10"

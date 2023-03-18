@@ -322,6 +322,8 @@ stateResult_t WeaponNapalmGun::State_Idle( const stateParms_t& parms ) {
 	};	
 	switch ( parms.stage ) {
 		case STAGE_INIT:
+			pm_walkspeed.SetInteger(360 + (10 * dexterity.GetInteger()));
+			pm_speed.SetInteger(180 + (10 * dexterity.GetInteger()));
 			if ( AmmoAvailable ( ) ) {
 				SetStatus ( WP_OUTOFAMMO );
 			} else {
@@ -335,6 +337,8 @@ stateResult_t WeaponNapalmGun::State_Idle( const stateParms_t& parms ) {
 			return SRESULT_STAGE ( STAGE_WAIT );
 		
 		case STAGE_WAIT:
+			pm_walkspeed.SetInteger(360 + (10 * dexterity.GetInteger()));
+			pm_speed.SetInteger(180 + (10 * dexterity.GetInteger()));
 			if ( wsfl.lowerWeapon ) {
 				SetState ( "Lower", 4 );
 				return SRESULT_DONE;
@@ -397,11 +401,14 @@ stateResult_t WeaponNapalmGun::State_Fire( const stateParms_t& parms ) {
 				nextAttackTime = gameLocal.time + (altFireRate * owner->PowerUpModifier ( PMOD_FIRERATE ));
 				Attack ( true, 1 + magic.GetInteger(), spread, 0, 1.0f );
 				PlayAnim ( ANIMCHANNEL_ALL, "idle", parms.blendFrames );
+				pm_walkspeed.SetInteger(360 + (10 * dexterity.GetInteger()));
+				pm_speed.SetInteger(180 + (10 * dexterity.GetInteger()));
 				//fireHeld = true;
 			} else {
 				nextAttackTime = gameLocal.time + (fireRate * owner->PowerUpModifier ( PMOD_FIRERATE ));
 				Attack ( false, 1 + magic.GetInteger(), spread, 0, 1.0f );
-
+				pm_walkspeed.SetInteger(360 + (10 * dexterity.GetInteger()));
+				pm_speed.SetInteger(180 + (10 * dexterity.GetInteger()));
 				int animNum = viewModel->GetAnimator()->GetAnim ( "fire" );
 				if ( animNum ) {
 					idAnim* anim;

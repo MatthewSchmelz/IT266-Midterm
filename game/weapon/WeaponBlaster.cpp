@@ -420,6 +420,7 @@ stateResult_t rvWeaponBlaster::State_Fire ( const stateParms_t& parms ) {
 			if( player && player->GuiActive() )	{
 				fireHeldTime = 0;
 				SetState ( "Lower", 0 );
+				player->cinematicHud->Activate(true, gameLocal.time);
 				return SRESULT_DONE;
 			}
 
