@@ -4,6 +4,8 @@ windowDef Desktop
 	menugui	1
 	rect	0,0,640,480
 	backcolor	0,0,0,1
+	::	mousey
+	-	186
 	definevec4	"corner"	0.564,0.603,0.286,0.4
 	definevec4	"corner_0"	0.564,0.603,0.286,0
 	definevec4	"white"	1,1,1,1
@@ -20,8 +22,8 @@ windowDef Desktop
 	definevec4	"orange"	0.890,0.537,0,1
 	definevec4	"yellow_8"	1,0.745,0.137,0.8
 	definevec4	"grey1_4"	0.435,0.435,0.435,0.4
-	definefloat	"tooltip_x_offset"	gui::mousex-255
-	definefloat	"tooltip_y_offset"	gui::mousey-186
+	definefloat	"tooltip_x_offset"	gui
+	definefloat	"tooltip_y_offset"	gui
 	defineicon	"fve"	"gfx/guis/mainmenu/icon_favorite.tga"
 	defineicon	"pse"	"gfx/guis/mainmenu/icon_locked.tga"
 	defineicon	"dse"	"gfx/guis/mainmenu/icon_dedserver.tga"
@@ -1880,66 +1882,46 @@ windowDef Desktop
 			}
 			windowDef mp_b1
 			{
-				rect	-22,80,390,231
+				rect	9,116,287,195
 				visible	1
 				background	"gfx/guis/mainmenu/b1_dark"
 				matcolor	1,1,1,0.4
+				forecolor	1,1,1,1
+				text	"Bonfire Info: All Stats can be upgraded near the medic, simply press the button for the stat when the menu appears."
+				textscale	0.4
+				font	"fonts/marine"
 			}
 			windowDef mp_b2
 			{
-				rect	267,69,413,257
+				rect	302,120,320,181
 				visible	1
 				background	"gfx/guis/mainmenu/b1_dark"
 				matcolor	1,1,1,0.4
+				forecolor	1,1,1,1
+				text	"Weapons Info: All weapons have been converted to either a melee weapon, ranged, or magic. They each scale off stats suitable for each weapon."
+				textscale	0.3
+				font	"fonts/marine"
 			}
 			windowDef mp_b3
 			{
-				rect	-17,193,400,276
+				rect	5,261,316,208
 				visible	1
 				background	"gfx/guis/mainmenu/b1_dark"
 				matcolor	1,1,1,0.4
+				forecolor	1,1,1,1
+				text	"Statistics: There are 5 stats, Melee, ranged, magic, dexterity, and vigor. The first 3 increase weapon scaling, while the last two increase speed and health."
+				textscale	0.3
+				font	"fonts/marine"
 			}
 			windowDef mp_b4
 			{
-				rect	276,197,413,269
+				rect	309,260,331,206
 				visible	1
 				background	"gfx/guis/mainmenu/b1_dark"
 				matcolor	1,1,1,0.4
-			}
-			windowDef mp_t_b1
-			{
-				rect	8,143,320,23
-				visible	1
-				forecolor	1,1,1,0.8
-				text	"#str_200023"
-				textscale	.31
-				font	"fonts/marine"
-			}
-			windowDef mp_t_b2
-			{
-				rect	300,135,320,23
-				visible	1
-				forecolor	1,1,1,0.8
-				text	"#str_200024"
-				textscale	.31
-				font	"fonts/marine"
-			}
-			windowDef mp_t_b3
-			{
-				rect	303,269,320,23
-				visible	1
-				forecolor	1,1,1,0.8
-				text	"#str_200026"
-				textscale	.31
-				font	"fonts/marine"
-			}
-			windowDef mp_t_b4
-			{
-				rect	13,263,320,23
-				visible	1
-				forecolor	1,1,1,0.8
-				text	"#str_200009"
-				textscale	.31
+				forecolor	1,1,1,1
+				text	"Readme: Need more info? There is a readme provided in the qsouls file, that goes more in depth about each change."
+				textscale	0.4
 				font	"fonts/marine"
 			}
 			windowDef mp_b2_corner
